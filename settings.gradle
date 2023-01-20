@@ -1,0 +1,4 @@
+include ':FtcRobotController'
+include ':TeamCode'
+include ':FTC-Core'
+project(':FTC-Core').projectDir = new File('../FTC-Core/modules/core')
