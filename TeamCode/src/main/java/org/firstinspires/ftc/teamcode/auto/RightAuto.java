@@ -25,8 +25,8 @@ import org.firstinspires.ftc.teamcode.auto.actions.SetArmAction;
 import org.firstinspires.ftc.teamcode.auto.actions.ToggleClawAction;
 import org.firstinspires.ftc.teamcode.auto.actions.WaitAction;
 
-@Disabled
-@Autonomous(name = "Right Side")
+//@Disabled
+//@Autonomous(name = "Right Side")
 public class RightAuto extends LinearOpMode
 {
     @Override

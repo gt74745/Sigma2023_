@@ -43,9 +43,9 @@ public class RightAuton extends LinearOpMode
                 .setOdometryWheelProperties(8192, 70, -233.2037353515, -186.0614013671)
                 .setOpMode(this)
                 .setIMU("imu")
-                .setPIDCoefficients(new PIDCoefficients(4.3, 0.00004, 8.0), new PIDCoefficients(700, 0, 0))
-                .setNavigationTolerances(new Tolerances(45, 0.15))
-                .setHighPrecisionTolerances(new Tolerances(17, 0.09))
+                .setPIDCoefficients(new PIDCoefficients(4.3, 0.00004, 8.0), new PIDCoefficients(700, 0.01, 0))
+                .setNavigationTolerances(new Tolerances(35, 0.12))
+                .setHighPrecisionTolerances(new Tolerances(13, 0.09))
                 .build();
 
         HardwareManager manager = new HardwareManager(config, hardwareMap);
@@ -84,22 +84,24 @@ public class RightAuton extends LinearOpMode
             telemetry.addLine("Signal sleeve detection failed");
         }
         double parkingPos;
-        parkingPos = dots == 1 ? -550 :
+        parkingPos = dots == 1 ? -570 :
                 (dots == 2 ? 0 : 600);
 
         telemetry.update();
 
         Pipeline pipeline = new Pipeline.Builder(manager)
                 .addContinuousAction(armPositionAction)
-                .addAction(new SetArmAction(manager, 4100))
+                .addAction(new SetArmAction(manager, 3000))
                 .addLinearPath(
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-617, 75, 0),
+                        new Position(-600, 75, 0),
                         new Position(-620, 1300, 0)
                 )
+                .addAction(new SetArmAction(manager, 4100))
                 .addLinearPath(
                         PrecisionMode.HIGH,
-                        new Position(-480, 1440, 7 * Math.PI / 4)
+//                        new Position(-480, 1440, 7 * Math.PI / 4)
+                        new Position(-300, 1340, 0)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, 3900))
@@ -109,7 +111,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(620, 1270, 3 * Math.PI / 2)
+                        new Position(635, 1280, 3 * Math.PI / 2, 0.9)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 2
@@ -119,7 +121,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-140, 1440, Math.PI / 4)
+                        new Position(-140, 1430, Math.PI / 4, 0.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, 3900))
@@ -129,7 +131,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(620, 1270, 3 * Math.PI / 2)
+                        new Position(630, 1270, 3 * Math.PI / 2, 0.9)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new WaitAction(manager, armPositionAction))
@@ -140,11 +142,32 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-140, 1440, Math.PI / 4)
+                        new Position(-170, 1430, Math.PI / 4, 0.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, 3900))
                 .addAction(toggleClawAction)                                    // Drop cone 3
+                .addAction(new DelayAction(manager, 200))
+                .addAction(new SetArmAction(manager, 500))
+                .addLinearPath(                                                 // Align with cone stack
+                        PrecisionMode.HIGH,
+                        new TrapezoidalMotionProfile(900, 1400),
+                        new Position(590, 1310, 3 * Math.PI / 2, 0.9)
+                )
+                .addAction(new FullStopAction(manager))
+                .addAction(new WaitAction(manager, armPositionAction))
+                .addAction(toggleClawAction)                                    // Pickup cone 4
+                .addAction(new DelayAction(manager, 400))
+                .addAction(new SetArmAction(manager, 4100))
+                .addAction(new DelayAction(manager, 200))
+                .addLinearPath(                                                 // Align with high junction
+                        PrecisionMode.HIGH,
+                        new TrapezoidalMotionProfile(900, 1400),
+                        new Position(-160, 1440, Math.PI / 4, 0.5)
+                )
+                .addAction(new FullStopAction(manager))
+                .addAction(new SetArmAction(manager, 3900))
+                .addAction(toggleClawAction)                                    // Drop cone 4
                 .addAction(new DelayAction(manager, 200))
                 .addAction(new SetArmAction(manager, 0))
                 .addLinearPath(                                                 // Park
