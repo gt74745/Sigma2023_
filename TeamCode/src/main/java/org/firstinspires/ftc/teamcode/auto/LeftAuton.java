@@ -105,7 +105,7 @@ public class LeftAuton extends LinearOpMode
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
 //                        new Position(-480, 1440, 7 * Math.PI / 4)
-                        new Position(285, 1340, 0, 1)
+                        new Position(285, 1340, 0, 0, 2)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, 3900))
@@ -125,7 +125,7 @@ public class LeftAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(125, 1420, 7 * Math.PI / 4, 0.5, 3.5)
+                        new Position(145, 1420, 7 * Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, 3900))
@@ -146,7 +146,7 @@ public class LeftAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(130, 1420, 7 * Math.PI / 4, 0.5, 3.5)
+                        new Position(150, 1420, 7 * Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, 3900))
@@ -167,7 +167,7 @@ public class LeftAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(145, 1420, 7 * Math.PI / 4, 0.5, 3.5)
+                        new Position(135, 1405, 7 * Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, 3900))
