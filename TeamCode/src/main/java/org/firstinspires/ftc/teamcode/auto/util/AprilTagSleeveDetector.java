@@ -11,15 +11,15 @@ import java.util.ArrayList;
 
 public class AprilTagSleeveDetector {
 
-    public static boolean started = false;
-    public static Zone zone;
-    public static OpenCvCamera camera;
-    private static AprilTagDetectionPipeline pipeline;
+    public boolean started = false;
+    public Zone zone;
+    public OpenCvCamera camera;
+    private AprilTagDetectionPipeline pipeline;
 
-    private static double fx = 578.272;
-    private static double fy = 578.272;
-    private static double cx = 402.145;
-    private static double cy = 221.506;
+    private static double fx = 1454;
+    private static double fy = 1454;
+    private static double cx = 702;
+    private static double cy = 341;
 
     // UNITS ARE METERS
     static double tagsize = 0.041;
@@ -30,7 +30,7 @@ public class AprilTagSleeveDetector {
     static final float THRESHOLD_HIGH_DECIMATION_RANGE_METERS = 1.0f;
     static final int THRESHOLD_NUM_FRAMES_NO_DETECTION_BEFORE_LOW_DECIMATION = 4;
 
-    public static void initAprilTags(HardwareManager manager)
+    public AprilTagSleeveDetector(HardwareManager manager)
     {
         int cameraMonitorViewId = manager.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", manager.hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(manager.accessoryCameras[0], cameraMonitorViewId);
@@ -53,7 +53,7 @@ public class AprilTagSleeveDetector {
         });
     }
 
-    public static void detect(HardwareManager manager) {
+    public void detect(HardwareManager manager) {
         ArrayList<AprilTagDetection> currentDetections = pipeline.getLatestDetections();
 
 
@@ -62,6 +62,7 @@ public class AprilTagSleeveDetector {
             manager.opMode.telemetry.addData("FPS", camera.getFps());
             manager.opMode.telemetry.addData("Overhead ms", camera.getOverheadTimeMs());
             manager.opMode.telemetry.addData("Pipeline ms", camera.getPipelineTimeMs());
+            manager.opMode.telemetry.addData("Tags", currentDetections.size());
 
             // If we don't see any tags
             if(currentDetections.size() == 0)
@@ -96,7 +97,9 @@ public class AprilTagSleeveDetector {
                         zone = Zone.ZONE_THREE;
                     }
                 }
+                manager.opMode.telemetry.addData("Zone", zone);
             }
+            manager.opMode.telemetry.update();
         }
     }
 

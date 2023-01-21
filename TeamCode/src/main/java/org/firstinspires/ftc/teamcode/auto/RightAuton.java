@@ -16,6 +16,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 
+import org.firstinspires.ftc.teamcode.auto.util.AprilTagSleeveDetector;
 import org.firstinspires.ftc.teamcode.auto.util.SignalSleeveDetector;
 import org.firstinspires.ftc.teamcode.auto.actions.ArmPositionAction;
 import org.firstinspires.ftc.teamcode.auto.actions.DelayAction;
@@ -60,35 +61,35 @@ public class RightAuton extends LinearOpMode
         manager.driveMotors[3].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         manager.accessoryMotors[0].setDirection(DcMotorSimple.Direction.REVERSE);
+        
+        AprilTagSleeveDetector sleeveDetector = new AprilTagSleeveDetector(manager);
 
-        CVUtility cv = null;
-        try {
-            cv = new CVUtility(manager, telemetry);
-        } catch (Exception e) {
-            telemetry.addLine("CVUtility failed to initialized");
-            telemetry.update();
-        }
+        AprilTagSleeveDetector.Zone zone = AprilTagSleeveDetector.Zone.ZONE_TWO;
 
         ArmPositionAction armPositionAction = new ArmPositionAction(manager);
         ToggleClawAction toggleClawAction = new ToggleClawAction(manager);
         toggleClawAction.execute();
 
+        while (!isStarted() && !isStopRequested())
+            sleeveDetector.detect(manager);
+
+
         waitForStart();
 
+        zone = sleeveDetector.zone;
         int dots = 1;
-        if (cv != null && cv.initialized && cv.grabFrame() != null) {
-            dots = SignalSleeveDetector.detectOrientation(cv.grabFrame());
-
-            telemetry.addData("Dots: ", dots);
-            cv.stopStreaming();
-        } else {
-            telemetry.addLine("Signal sleeve detection failed");
+        if (zone != null) {
+            if (zone.equals(AprilTagSleeveDetector.Zone.ZONE_TWO)) {
+                dots = 2;
+            } else if (zone.equals(AprilTagSleeveDetector.Zone.ZONE_THREE)) {
+                dots = 3;
+            }
         }
+        sleeveDetector.camera.stopStreaming();
+
         double parkingPos;
         parkingPos = dots == 1 ? -570 :
                 (dots == 2 ? 0 : 600);
-
-        telemetry.update();
 
         Pipeline pipeline = new Pipeline.Builder(manager)
                 .addContinuousAction(armPositionAction)
