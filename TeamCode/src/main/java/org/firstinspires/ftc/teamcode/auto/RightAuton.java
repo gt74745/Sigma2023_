@@ -61,7 +61,7 @@ public class RightAuton extends LinearOpMode
         manager.driveMotors[3].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         manager.accessoryMotors[0].setDirection(DcMotorSimple.Direction.REVERSE);
-        
+
         AprilTagSleeveDetector sleeveDetector = new AprilTagSleeveDetector(manager);
 
         AprilTagSleeveDetector.Zone zone = AprilTagSleeveDetector.Zone.ZONE_TWO;

@@ -48,7 +48,8 @@ public class DriverControl extends LinearOpMode {
             long bLastPressed = 0;
             boolean clawClosed;
 
-            long bumperLastPressed;
+            long bumperLastPressed = 0;
+            long speedModifierLastPressed = 0;
             boolean isPrecision;
             boolean isArmOverrideActive;
             double armOverrideOffset = 0;
@@ -114,6 +115,10 @@ public class DriverControl extends LinearOpMode {
                 if (gamepad1.right_bumper && System.currentTimeMillis() - bumperLastPressed > 250) {
                     isPrecision = !isPrecision;
                     bumperLastPressed = System.currentTimeMillis();
+                }
+                if (gamepad1.left_bumper && System.currentTimeMillis() - speedModifierLastPressed > 250) {
+                    Drive.useSpeedModifier = !Drive.useSpeedModifier;
+                    speedModifierLastPressed = System.currentTimeMillis();
                 }
 
                 if (isPrecision) {
