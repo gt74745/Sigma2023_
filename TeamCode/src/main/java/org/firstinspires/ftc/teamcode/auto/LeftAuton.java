@@ -84,7 +84,9 @@ public class LeftAuton extends LinearOpMode
                 dots = 3;
             }
         }
-        sleeveDetector.camera.stopStreaming();
+        if (sleeveDetector.camera.getFps() != 0) {
+            sleeveDetector.camera.stopStreaming();
+        }
 
         double parkingPos;
         parkingPos = dots == 1 ? -570 :
@@ -95,15 +97,15 @@ public class LeftAuton extends LinearOpMode
                 .addAction(new SetArmAction(manager, 3000))
                 .addLinearPath(
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(600, 75, 0),
-                        new Position(620, 1300, 0)
+                        new Position(600, 75, 0, 0),
+                        new Position(620, 1300, 0, 0)
                 )
                 .addAction(new SetArmAction(manager, 4100))
                 .addLinearPath(
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
 //                        new Position(-480, 1440, 7 * Math.PI / 4)
-                        new Position(285, 1340, 0)
+                        new Position(285, 1340, 0, 1)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, 3900))
@@ -113,7 +115,7 @@ public class LeftAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-610, 1300, Math.PI / 2, 0.9)
+                        new Position(-610, 1300, Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 2
@@ -123,7 +125,7 @@ public class LeftAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(125, 1420, 7 * Math.PI / 4, 0.5)
+                        new Position(125, 1420, 7 * Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, 3900))
@@ -133,7 +135,7 @@ public class LeftAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-615, 1295, Math.PI / 2, 0.9)
+                        new Position(-635, 1295, Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new WaitAction(manager, armPositionAction))
@@ -144,7 +146,7 @@ public class LeftAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(130, 1420, 7 * Math.PI / 4, 0.5)
+                        new Position(130, 1420, 7 * Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, 3900))
@@ -154,7 +156,7 @@ public class LeftAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-610, 1300, Math.PI / 2, 0.9)
+                        new Position(-630, 1300, Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new WaitAction(manager, armPositionAction))
@@ -165,7 +167,7 @@ public class LeftAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(145, 1420, 7 * Math.PI / 4, 0.5)
+                        new Position(145, 1420, 7 * Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, 3900))
