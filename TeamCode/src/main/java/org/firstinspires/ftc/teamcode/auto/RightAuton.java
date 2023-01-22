@@ -85,7 +85,10 @@ public class RightAuton extends LinearOpMode
                 dots = 3;
             }
         }
-        sleeveDetector.camera.stopStreaming();
+
+        if (sleeveDetector.camera.getFps() != 0) {
+            sleeveDetector.camera.stopStreaming();
+        }
 
         double parkingPos;
         parkingPos = dots == 1 ? -570 :
