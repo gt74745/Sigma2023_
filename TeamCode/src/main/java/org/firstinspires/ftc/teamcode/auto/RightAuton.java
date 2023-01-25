@@ -42,7 +42,7 @@ public class RightAuton extends LinearOpMode
                 .addAccessory(new Accessory(AccessoryType.ODOMETRY_POD, "odo0"))
                 .addAccessory(new Accessory(AccessoryType.ODOMETRY_POD, "odo1"))
 //                .setOdometryWheelProperties(8192, 70, -233, -186)
-                .setOdometryWheelProperties(8192, 70, -233.2037353515, -186.0614013671)
+                .setOdometryWheelProperties(8192, 35, -233.2037353515/2, -186.0614013671/2)
                 .setOpMode(this)
                 .setIMU("imu")
                 .setPIDCoefficients(new PIDCoefficients(4.3, 0.00003, 8.0), new PIDCoefficients(650, 0.005, 0))
@@ -107,7 +107,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(
                         PrecisionMode.HIGH,
 //                        new Position(-480, 1440, 7 * Math.PI / 4)
-                        new Position(-270, 1335, 0, 0, 2.5)
+                        new Position(-270, 1345, 0, 0, 2.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, maxLiftHeight - 200))

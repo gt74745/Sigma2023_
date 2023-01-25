@@ -15,8 +15,8 @@ public class ToggleClawAction extends Action {
     }
 
     private void setClawPosition(double val) {
-        manager.accessoryServos[0].setPosition(val);
-        manager.accessoryServos[1].setPosition(0.91-val);
+//        manager.accessoryServos[0].setPosition(val);
+//        manager.accessoryServos[1].setPosition(0.91-val);
     }
 
     public void execute()

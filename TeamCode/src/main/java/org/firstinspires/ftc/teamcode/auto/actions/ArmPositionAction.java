@@ -24,7 +24,7 @@ public class ArmPositionAction extends ContinuousAction {
         double armPosError = targetArmPos - armPos;
         double dArmPosError = (armPos - prevArmPos) / (System.currentTimeMillis() - prevTime);
         double output = controller.getOutput(armPosError, dArmPosError);
-        hardware.accessoryMotors[0].setPower(output);
+//        hardware.accessoryMotors[0].setPower(output);
         prevArmPos = armPos;
         prevTime = System.currentTimeMillis();
     }
@@ -32,7 +32,8 @@ public class ArmPositionAction extends ContinuousAction {
     @Override
     public boolean isFinished()
     {
-        return Math.abs(hardware.getLiftMotor().getCurrentPosition() - targetArmPos) < 10;
+        return true;
+//        return Math.abs(hardware.getLiftMotor().getCurrentPosition() - targetArmPos) < 10;
     }
 
     @Override
