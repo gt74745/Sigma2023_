@@ -41,8 +41,8 @@ public class RightAuton extends LinearOpMode
                 .addAccessory(new Accessory(AccessoryType.WEBCAM, "webcam"))
                 .addAccessory(new Accessory(AccessoryType.ODOMETRY_POD, "odo0"))
                 .addAccessory(new Accessory(AccessoryType.ODOMETRY_POD, "odo1"))
-                .setOdometryWheelProperties(8192, 70, -233, -186)
-//                .setOdometryWheelProperties(8192, 70, -233.2037353515, -186.0614013671)
+//                .setOdometryWheelProperties(8192, 70, -233, -186)
+                .setOdometryWheelProperties(8192, 70, -233.2037353515, -186.0614013671)
                 .setOpMode(this)
                 .setIMU("imu")
                 .setPIDCoefficients(new PIDCoefficients(4.3, 0.00003, 8.0), new PIDCoefficients(650, 0.005, 0))
@@ -107,7 +107,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(
                         PrecisionMode.HIGH,
 //                        new Position(-480, 1440, 7 * Math.PI / 4)
-                        new Position(-285, 1335, 0, 0, 2.5)
+                        new Position(-270, 1335, 0, 0, 2.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, maxLiftHeight - 200))
@@ -117,7 +117,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(630, 1250, 3 * Math.PI / 2, 0.9, 3.5)
+                        new Position(640, 1250, 3 * Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 2
@@ -127,7 +127,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-140, 1410, Math.PI / 4, 0.5, 3.5)
+                        new Position(-130, 1430, Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, maxLiftHeight - 200))
@@ -137,7 +137,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(630, 1250, 3 * Math.PI / 2, 0.9, 3.5)
+                        new Position(610, 1260, 3 * Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new WaitAction(manager, armPositionAction))
@@ -148,7 +148,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-160, 1415, Math.PI / 4, 0.5, 3.5)
+                        new Position(-150, 1425, Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, maxLiftHeight - 200))
@@ -158,7 +158,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(630, 1250, 3 * Math.PI / 2, 0.9, 3.5)
+                        new Position(610, 1250, 3 * Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new WaitAction(manager, armPositionAction))
