@@ -45,8 +45,8 @@ public class RightAuton extends LinearOpMode
 //                .setOdometryWheelProperties(8192, 70, -233.2037353515, -186.0614013671)
                 .setOpMode(this)
                 .setIMU("imu")
-                .setPIDCoefficients(new PIDCoefficients(4.3, 0.00004, 8.0), new PIDCoefficients(700, 0.01, 0))
-                .setNavigationTolerances(new Tolerances(45, 0.20))
+                .setPIDCoefficients(new PIDCoefficients(4.3, 0.00003, 8.0), new PIDCoefficients(650, 0.005, 0))
+                .setNavigationTolerances(new Tolerances(45, 0.1))
                 .setHighPrecisionTolerances(new Tolerances(17, 0.09))
                 .build();
 
@@ -107,7 +107,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(
                         PrecisionMode.HIGH,
 //                        new Position(-480, 1440, 7 * Math.PI / 4)
-                        new Position(-285, 1330, 0, 0, 2)
+                        new Position(-285, 1335, 0, 0, 2.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, maxLiftHeight - 200))
@@ -117,7 +117,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(630, 1300, 3 * Math.PI / 2, 0.9, 3.5)
+                        new Position(630, 1250, 3 * Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 2
@@ -127,7 +127,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-145, 1405, Math.PI / 4, 0.5, 3.5)
+                        new Position(-140, 1410, Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, maxLiftHeight - 200))
@@ -137,7 +137,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(615, 1295, 3 * Math.PI / 2, 0.9, 3.5)
+                        new Position(630, 1250, 3 * Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new WaitAction(manager, armPositionAction))
@@ -148,7 +148,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-160, 1410, Math.PI / 4, 0.5, 3.5)
+                        new Position(-160, 1415, Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, maxLiftHeight - 200))
@@ -158,7 +158,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(590, 1310, 3 * Math.PI / 2, 0.9, 3.5)
+                        new Position(630, 1250, 3 * Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new WaitAction(manager, armPositionAction))
