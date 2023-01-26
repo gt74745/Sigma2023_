@@ -117,7 +117,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(640, 1250, 3 * Math.PI / 2, 0.9, 3.5)
+                        new Position(630, 1275, 3 * Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 2
@@ -127,7 +127,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-130, 1430, Math.PI / 4, 0.5, 3.5)
+                        new Position(-120, 1430, Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, maxLiftHeight - 200))
@@ -137,7 +137,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(610, 1260, 3 * Math.PI / 2, 0.9, 3.5)
+                        new Position(610, 1275, 3 * Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new WaitAction(manager, armPositionAction))
@@ -148,17 +148,17 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-150, 1425, Math.PI / 4, 0.5, 3.5)
+                        new Position(-125, 1425, Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, maxLiftHeight - 200))
                 .addAction(toggleClawAction)                                    // Drop cone 3
                 .addAction(new DelayAction(manager, 200))
-                .addAction(new SetArmAction(manager, 500))
+                .addAction(new SetArmAction(manager, 400))
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(610, 1250, 3 * Math.PI / 2, 0.9, 3.5)
+                        new Position(600, 1275, 3 * Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new WaitAction(manager, armPositionAction))
@@ -169,7 +169,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-175, 1405, Math.PI / 4, 0.5, 3.5)
+                        new Position(-150, 1395, Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, maxLiftHeight - 200))

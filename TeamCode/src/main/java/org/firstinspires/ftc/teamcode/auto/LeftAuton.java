@@ -1,28 +1,29 @@
 package org.firstinspires.ftc.teamcode.auto;
 
-import com.chsrobotics.ftccore.engine.navigation.path.PrecisionMode;
-import com.chsrobotics.ftccore.engine.navigation.path.Tolerances;
-import com.chsrobotics.ftccore.engine.navigation.path.TrapezoidalMotionProfile;
-import com.chsrobotics.ftccore.geometry.Position;
-import com.chsrobotics.ftccore.hardware.HardwareManager;
-import com.chsrobotics.ftccore.hardware.config.Config;
-import com.chsrobotics.ftccore.hardware.config.accessory.Accessory;
-import com.chsrobotics.ftccore.hardware.config.accessory.AccessoryType;
-import com.chsrobotics.ftccore.pipeline.Pipeline;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.PIDCoefficients;
+        import com.chsrobotics.ftccore.engine.navigation.path.PrecisionMode;
+        import com.chsrobotics.ftccore.engine.navigation.path.Tolerances;
+        import com.chsrobotics.ftccore.engine.navigation.path.TrapezoidalMotionProfile;
+        import com.chsrobotics.ftccore.geometry.Position;
+        import com.chsrobotics.ftccore.hardware.HardwareManager;
+        import com.chsrobotics.ftccore.hardware.config.Config;
+        import com.chsrobotics.ftccore.hardware.config.accessory.Accessory;
+        import com.chsrobotics.ftccore.hardware.config.accessory.AccessoryType;
+        import com.chsrobotics.ftccore.pipeline.Pipeline;
+        import com.chsrobotics.ftccore.vision.CVUtility;
+        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+        import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+        import com.qualcomm.robotcore.hardware.DcMotor;
+        import com.qualcomm.robotcore.hardware.DcMotorSimple;
+        import com.qualcomm.robotcore.hardware.PIDCoefficients;
 
-import org.firstinspires.ftc.teamcode.auto.actions.ArmPositionAction;
-import org.firstinspires.ftc.teamcode.auto.actions.DelayAction;
-import org.firstinspires.ftc.teamcode.auto.actions.FullStopAction;
-import org.firstinspires.ftc.teamcode.auto.actions.SetArmAction;
-import org.firstinspires.ftc.teamcode.auto.actions.ToggleClawAction;
-import org.firstinspires.ftc.teamcode.auto.actions.WaitAction;
-import org.firstinspires.ftc.teamcode.auto.util.AprilTagSleeveDetector;
-import org.firstinspires.ftc.teamcode.auto.util.AprilTagSleeveDetector.Zone;
+        import org.firstinspires.ftc.teamcode.auto.util.AprilTagSleeveDetector;
+        import org.firstinspires.ftc.teamcode.auto.util.SignalSleeveDetector;
+        import org.firstinspires.ftc.teamcode.auto.actions.ArmPositionAction;
+        import org.firstinspires.ftc.teamcode.auto.actions.DelayAction;
+        import org.firstinspires.ftc.teamcode.auto.actions.FullStopAction;
+        import org.firstinspires.ftc.teamcode.auto.actions.SetArmAction;
+        import org.firstinspires.ftc.teamcode.auto.actions.ToggleClawAction;
+        import org.firstinspires.ftc.teamcode.auto.actions.WaitAction;
 
 @Autonomous(name = "Left Side")
 public class LeftAuton extends LinearOpMode
@@ -40,12 +41,12 @@ public class LeftAuton extends LinearOpMode
                 .addAccessory(new Accessory(AccessoryType.WEBCAM, "webcam"))
                 .addAccessory(new Accessory(AccessoryType.ODOMETRY_POD, "odo0"))
                 .addAccessory(new Accessory(AccessoryType.ODOMETRY_POD, "odo1"))
-                .setOdometryWheelProperties(8192, 70, -233, -186)
-//                .setOdometryWheelProperties(8192, 70, -233.2037353515, -186.0614013671)
+//                .setOdometryWheelProperties(8192, 70, -233, -186)
+                .setOdometryWheelProperties(8192, 35, -233.2037353515/2, -186.0614013671/2)
                 .setOpMode(this)
                 .setIMU("imu")
-                .setPIDCoefficients(new PIDCoefficients(4.3, 0.00004, 8.0), new PIDCoefficients(700, 0.01, 0))
-                .setNavigationTolerances(new Tolerances(45, 0.20))
+                .setPIDCoefficients(new PIDCoefficients(4.3, 0.00003, 8.0), new PIDCoefficients(700, 0.005, 0))
+                .setNavigationTolerances(new Tolerances(45, 0.1))
                 .setHighPrecisionTolerances(new Tolerances(17, 0.09))
                 .build();
 
@@ -63,7 +64,7 @@ public class LeftAuton extends LinearOpMode
 
         AprilTagSleeveDetector sleeveDetector = new AprilTagSleeveDetector(manager);
 
-        Zone zone = Zone.ZONE_TWO;
+        AprilTagSleeveDetector.Zone zone = AprilTagSleeveDetector.Zone.ZONE_TWO;
 
         ArmPositionAction armPositionAction = new ArmPositionAction(manager);
         ToggleClawAction toggleClawAction = new ToggleClawAction(manager);
@@ -74,16 +75,17 @@ public class LeftAuton extends LinearOpMode
 
 
         waitForStart();
-        
+
         zone = sleeveDetector.zone;
         int dots = 1;
         if (zone != null) {
-            if (zone.equals(Zone.ZONE_TWO)) {
+            if (zone.equals(AprilTagSleeveDetector.Zone.ZONE_TWO)) {
                 dots = 2;
-            } else if (zone.equals(Zone.ZONE_THREE)) {
+            } else if (zone.equals(AprilTagSleeveDetector.Zone.ZONE_THREE)) {
                 dots = 3;
             }
         }
+
         if (sleeveDetector.camera.getFps() != 0) {
             sleeveDetector.camera.stopStreaming();
         }
@@ -92,92 +94,92 @@ public class LeftAuton extends LinearOpMode
         parkingPos = dots == 1 ? -570 :
                 (dots == 2 ? 0 : 600);
 
+        double maxLiftHeight = 3900;
         Pipeline pipeline = new Pipeline.Builder(manager)
                 .addContinuousAction(armPositionAction)
                 .addAction(new SetArmAction(manager, 3000))
                 .addLinearPath(
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(600, 75, 0, 0),
-                        new Position(620, 1300, 0, 0)
+                        new Position(600, 75, 0),
+                        new Position(620, 1300, 0)
                 )
-                .addAction(new SetArmAction(manager, 4100))
+                .addAction(new SetArmAction(manager, maxLiftHeight))
                 .addLinearPath(
                         PrecisionMode.HIGH,
-                        new TrapezoidalMotionProfile(900, 1400),
 //                        new Position(-480, 1440, 7 * Math.PI / 4)
-                        new Position(285, 1340, 0, 0, 2)
+                        new Position(280, 1345, 0, 0, 2.5)
                 )
                 .addAction(new FullStopAction(manager))
-                .addAction(new SetArmAction(manager, 3900))
+                .addAction(new SetArmAction(manager, maxLiftHeight - 200))
                 .addAction(toggleClawAction)                                    // Drop cone 1
                 .addAction(new DelayAction(manager, 200))
                 .addAction(new SetArmAction(manager, 700))
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-610, 1300, Math.PI / 2, 0.9, 3.5)
+                        new Position(-635, 1290, Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 2
                 .addAction(new DelayAction(manager, 400))
-                .addAction(new SetArmAction(manager,4100))
+                .addAction(new SetArmAction(manager,maxLiftHeight))
                 .addAction(new DelayAction(manager, 200))
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(145, 1420, 7 * Math.PI / 4, 0.5, 3.5)
+                        new Position(120, 1415, 7 * Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
-                .addAction(new SetArmAction(manager, 3900))
+                .addAction(new SetArmAction(manager, maxLiftHeight - 200))
                 .addAction(toggleClawAction)                                    // Drop cone 2
                 .addAction(new DelayAction(manager, 200))
                 .addAction(new SetArmAction(manager, 500))
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-635, 1295, Math.PI / 2, 0.9, 3.5)
+                        new Position(-635, 1290, Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new WaitAction(manager, armPositionAction))
                 .addAction(toggleClawAction)                                    // Pickup cone 3
                 .addAction(new DelayAction(manager, 400))
-                .addAction(new SetArmAction(manager, 4100))
+                .addAction(new SetArmAction(manager, maxLiftHeight))
                 .addAction(new DelayAction(manager, 200))
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(150, 1420, 7 * Math.PI / 4, 0.5, 3.5)
+                        new Position(125, 1410, 7 * Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
-                .addAction(new SetArmAction(manager, 3900))
+                .addAction(new SetArmAction(manager, maxLiftHeight - 200))
                 .addAction(toggleClawAction)                                    // Drop cone 3
                 .addAction(new DelayAction(manager, 200))
-                .addAction(new SetArmAction(manager, 500))
+                .addAction(new SetArmAction(manager, 400))
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-630, 1300, Math.PI / 2, 0.9, 3.5)
+                        new Position(-640, 1290, Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new WaitAction(manager, armPositionAction))
                 .addAction(toggleClawAction)                                    // Pickup cone 4
                 .addAction(new DelayAction(manager, 400))
-                .addAction(new SetArmAction(manager, 4100))
+                .addAction(new SetArmAction(manager, maxLiftHeight))
                 .addAction(new DelayAction(manager, 200))
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(135, 1405, 7 * Math.PI / 4, 0.5, 3.5)
+                        new Position(125, 1395, 7 * Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
-                .addAction(new SetArmAction(manager, 3900))
+                .addAction(new SetArmAction(manager, maxLiftHeight - 200))
                 .addAction(toggleClawAction)                                    // Drop cone 4
                 .addAction(new DelayAction(manager, 200))
                 .addAction(new SetArmAction(manager, 0))
                 .addLinearPath(                                                 // Park
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(parkingPos, 1200, 0)
+                        new Position(-parkingPos, 1200, 0)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new WaitAction(manager, armPositionAction))
