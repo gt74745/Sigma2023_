@@ -105,7 +105,7 @@ public class DriverControl extends LinearOpMode {
                 }
 
                 if (clawClosed) {
-                    setClawPower(0.82);
+                    setClawPower(0.85);
                 } else
                 {
                     setClawPower(0.58);

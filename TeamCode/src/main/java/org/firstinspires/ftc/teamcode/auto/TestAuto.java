@@ -22,18 +22,31 @@ public class TestAuto extends LinearOpMode {
                 .setDriveMotors("m0", "m1", "m2", "m3")
                 .addAccessory(new Accessory(AccessoryType.ODOMETRY_POD, "odo0"))
                 .addAccessory(new Accessory(AccessoryType.ODOMETRY_POD, "odo1"))
-                .setOdometryWheelProperties(8192, 70, -233.2037353515, -186.0614013671)
+                .setOdometryWheelProperties(8192, 70, 8, -8)
                 .setOpMode(this)
                 .setIMU("imu")
-//                .setPIDCoefficients(new PIDCoefficients(4.5, 0.0002, 0), new PIDCoefficients(750, 0.03, 0))
-//                .setNavigationTolerances(new Tolerances(10, 0.02))
+                .setPIDCoefficients(new PIDCoefficients(45, 0.0002, 80), new PIDCoefficients(750, 0.006, 0))
+                .setNavigationTolerances(new Tolerances(10, 0.02))
                 .build();
 
         HardwareManager manager = new HardwareManager(config, hardwareMap);
 
-        manager.accessoryOdometryPods[0].setDirection(DcMotorSimple.Direction.REVERSE);
-        manager.accessoryOdometryPods[1].setDirection(DcMotorSimple.Direction.FORWARD);
+        Pipeline pipeline = new Pipeline.Builder(manager)
+                .addLinearPath(
+                        new TrapezoidalMotionProfile(60, 120),
+                        new Position(0, 24, 0),
+                        new Position(24, 24, Math.PI / 2)
+                )
+                .addCurvedPath(
+                        new Position(24, 24, Math.PI / 2),
+                        new Position(48, 24, Math.PI / 2),
+                        new Position(48, 64, Math.PI / 2),
+                        new Position(84, 64, Math.PI / 2)
+                )
+                .build();
 
         waitForStart();
+
+        pipeline.execute();
     }
 }
