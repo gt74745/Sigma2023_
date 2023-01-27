@@ -179,7 +179,7 @@ public class LeftAuton extends LinearOpMode
                 .addLinearPath(                                                 // Park
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-parkingPos, 1200, 0)
+                        new Position(parkingPos, 1200, 0)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new WaitAction(manager, armPositionAction))
