@@ -73,7 +73,6 @@ public class RightAuton extends LinearOpMode
         while (!isStarted() && !isStopRequested())
             sleeveDetector.detect(manager);
 
-
         waitForStart();
 
         zone = sleeveDetector.zone;
@@ -107,7 +106,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(
                         PrecisionMode.HIGH,
 //                        new Position(-480, 1440, 7 * Math.PI / 4)
-                        new Position(-280, 1345, 0, 0, 2.5)
+                        new Position(-305, 1340, 0, 0, 2.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, maxLiftHeight - 200))
@@ -117,7 +116,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(610, 1275, 3 * Math.PI / 2, 0.9, 3.5)
+                        new Position(615, 1275, 3 * Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 2
@@ -127,7 +126,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-120, 1410, Math.PI / 4, 0.5, 3.5)
+                        new Position(-145, 1405, Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, maxLiftHeight - 200))
@@ -137,7 +136,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(605, 1275, 3 * Math.PI / 2, 0.9, 3.5)
+                        new Position(605, 1285, 3 * Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new WaitAction(manager, armPositionAction))
@@ -148,7 +147,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-125, 1415, Math.PI / 4, 0.5, 3.5)
+                        new Position(-160, 1410, Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, maxLiftHeight - 200))
@@ -158,7 +157,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(595, 1275, 3 * Math.PI / 2, 0.9, 3.5)
+                        new Position(595, 1285, 3 * Math.PI / 2, 0.9, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new WaitAction(manager, armPositionAction))
@@ -169,7 +168,7 @@ public class RightAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with high junction
                         PrecisionMode.HIGH,
                         new TrapezoidalMotionProfile(900, 1400),
-                        new Position(-150, 1395, Math.PI / 4, 0.5, 3.5)
+                        new Position(-175, 1410, Math.PI / 4, 0.5, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, maxLiftHeight - 200))

@@ -62,7 +62,7 @@ public class DriverControl extends LinearOpMode {
             private void setClawPower(double val) {
                 telemetry.addData("val", val);
                 manager.accessoryServos[0].setPosition(val);
-                manager.accessoryServos[1].setPosition(0.92-val);
+                manager.accessoryServos[1].setPosition(0.85-val);
             }
 
             @Override
@@ -105,10 +105,10 @@ public class DriverControl extends LinearOpMode {
                 }
 
                 if (clawClosed) {
-                    setClawPower(0.82);
+                    setClawPower(0.85 );
                 } else
                 {
-                    setClawPower(0.58);
+                    setClawPower(0.64);
                 }
                 telemetry.update();
                 if (gamepad1.right_bumper && System.currentTimeMillis() - bumperLastPressed > 250) {
