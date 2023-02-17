@@ -86,8 +86,9 @@ public class PolePIDTest extends LinearOpMode
         waitForStart();
 
         int target = 0;
-        if (polePipeline.rx != 0 && polePipeline.rh > 300) {
-            target = (int) (polePipeline.rx + polePipeline.rw/2 - 360);
+        if (polePipeline.rw != 0 && polePipeline.rh > 300) {
+            int center = 600 - 2 * (int) polePipeline.rw;
+            target = (int) (75 * (polePipeline.rx + polePipeline.rw/2 - center) / polePipeline.rw);
         }
 
         Pipeline pipeline = new Pipeline.Builder(manager)

@@ -103,15 +103,18 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
         }
 
         if (largestRect != null) {
-            OpModeHolder.opMode.telemetry.addData("Rx", largestRect.x);
-            OpModeHolder.opMode.telemetry.addData("Ry", largestRect.y);
-            OpModeHolder.opMode.telemetry.addData("Rw", largestRect.width);
-            OpModeHolder.opMode.telemetry.addData("Rh", largestRect.height);
-            OpModeHolder.opMode.telemetry.update();
             rx = largestRect.x;
             ry = largestRect.y;
             rw = largestRect.width;
             rh = largestRect.height;
+            int center = 600 - 2 * (int) rw;
+            OpModeHolder.opMode.telemetry.addData("Rx", largestRect.x);
+            OpModeHolder.opMode.telemetry.addData("Ry", largestRect.y);
+            OpModeHolder.opMode.telemetry.addData("Rw", largestRect.width);
+            OpModeHolder.opMode.telemetry.addData("Rh", largestRect.height);
+            OpModeHolder.opMode.telemetry.addData("Rmid", largestRect.x + largestRect.width/2);
+            OpModeHolder.opMode.telemetry.addData("center", center);
+            OpModeHolder.opMode.telemetry.update();
         } else {
             rx = 0;
             ry = 0;
