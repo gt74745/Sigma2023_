@@ -110,7 +110,7 @@ public class DriverControl extends LinearOpMode {
                 {
                     setClawPower(0.58);
                 }
-                telemetry.update();
+//                telemetry.update();
                 if (gamepad1.right_bumper && System.currentTimeMillis() - bumperLastPressed > 250) {
                     isPrecision = !isPrecision;
                     bumperLastPressed = System.currentTimeMillis();

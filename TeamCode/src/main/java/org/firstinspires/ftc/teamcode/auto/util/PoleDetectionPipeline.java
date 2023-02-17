@@ -14,6 +14,10 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
     //these are public static to be tuned in dashboard
     public static double strictLowS = 140;
     public static double strictHighS = 255;
+    public double rx;
+    public double ry;
+    public double rw;
+    public double rh;
 
     public Mat processFrame(Mat input) {
         Mat mat = new Mat();
@@ -104,6 +108,15 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
             OpModeHolder.opMode.telemetry.addData("Rw", largestRect.width);
             OpModeHolder.opMode.telemetry.addData("Rh", largestRect.height);
             OpModeHolder.opMode.telemetry.update();
+            rx = largestRect.x;
+            ry = largestRect.y;
+            rw = largestRect.width;
+            rh = largestRect.height;
+        } else {
+            rx = 0;
+            ry = 0;
+            rw = 0;
+            rh = 0;
         }
 
         rectComponents.release();

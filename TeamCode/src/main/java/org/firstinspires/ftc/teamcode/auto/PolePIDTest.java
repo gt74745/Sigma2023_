@@ -63,7 +63,7 @@ public class PolePIDTest extends LinearOpMode
         int cameraMonitorViewId = manager.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", manager.hardwareMap.appContext.getPackageName());
         WebcamName poleDetectionWebcam = hardwareMap.get(WebcamName.class, "webcam");
         OpenCvWebcam poleWebcam = OpenCvCameraFactory.getInstance().createWebcam(poleDetectionWebcam, cameraMonitorViewId);
-        OpenCvPipeline polePipeline = new PoleDetectionPipeline();
+        PoleDetectionPipeline polePipeline = new PoleDetectionPipeline();
 
         poleWebcam.setPipeline(polePipeline);
         poleWebcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
@@ -85,13 +85,15 @@ public class PolePIDTest extends LinearOpMode
 
         waitForStart();
 
+        int target = 0;
+        if (polePipeline.rx != 0 && polePipeline.rh > 300) {
+            target = (int) (polePipeline.rx + polePipeline.rw/2 - 360);
+        }
+
         Pipeline pipeline = new Pipeline.Builder(manager)
-//                .addLinearPath(new Position(-1000, 0, 0))
+                .addLinearPath(new Position(target, 0, 0))
                 .build();
 
         pipeline.execute();
-        while (!isStopRequested()) {
-
-        }
     }
 }
