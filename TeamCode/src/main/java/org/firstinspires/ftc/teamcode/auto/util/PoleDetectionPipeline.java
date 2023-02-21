@@ -73,14 +73,14 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
         // todo: analyze multiple frames to improve consistency
 
         // release color detection mats
-        input.release();
-        scaledThresh.copyTo(input);
+        scaledThresh.release();
         scaledThresh.release();
         scaledMask.release();
         masked.release();
         edges.release();
         finalMask.release();
         hierarchy.release();
+        mat.release();
 
         // Find largest connected component as a rectangle
         Mat labeled = new Mat(thresh.size(), thresh.type());
@@ -134,7 +134,7 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
         // note that you must not do thresh.release() if you want to return thresh
         // you also need to release the input if you return thresh(release as much as possible)
 //        return contours.size() != 0 ? contours.get(0) : finalMask;
-        return mat;
+        return input;
     }
 
 }
