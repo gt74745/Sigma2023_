@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.auto;
 
+import com.chsrobotics.ftccore.engine.navigation.path.PrecisionMode;
 import com.chsrobotics.ftccore.engine.navigation.path.Tolerances;
 import com.chsrobotics.ftccore.geometry.Position;
 import com.chsrobotics.ftccore.hardware.HardwareManager;
@@ -14,8 +15,11 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.auto.actions.ArmPositionAction;
+import org.firstinspires.ftc.teamcode.auto.actions.ToggleClawAction;
 import org.firstinspires.ftc.teamcode.auto.util.OpModeHolder;
 import org.firstinspires.ftc.teamcode.auto.util.PoleDetectionPipeline;
+import org.opencv.core.Rect;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -85,14 +89,33 @@ public class PolePIDTest extends LinearOpMode
 
         waitForStart();
 
-        int target = 0;
-        if (polePipeline.rw != 0 && polePipeline.rh > 300) {
-            int center = 600 - 2 * (int) polePipeline.rw;
-            target = (int) (75 * (polePipeline.rx + polePipeline.rw/2 - center) / polePipeline.rw);
+        int offsetX = 0;
+        int offsetY = 0;
+        Rect avg = polePipeline.averageRect;
+        if (avg != null && avg.width != 0 && avg.height > 300) {
+            int center = (int) (724 - 2.69 * avg.width);
+            offsetX = (int) (40 * (avg.x + avg.width/2 - center) / avg.width);
+            double diff = avg.width - 160;
+            diff -= offsetX < 0 ? offsetX / 20d : offsetX / 15d;
+            double linearTerm = -diff * 2.4;
+            double quadratic = 0.001 * Math.pow(diff, 2);
+            offsetY = (int) (linearTerm + quadratic);
+            OpModeHolder.opMode.telemetry.addData("Rx", avg.x);
+            OpModeHolder.opMode.telemetry.addData("Ry", avg.y);
+            OpModeHolder.opMode.telemetry.addData("Rw", avg.width);
+            OpModeHolder.opMode.telemetry.addData("Rh", avg.height);
+            OpModeHolder.opMode.telemetry.addData("Rmid", avg.x + avg.width/2);
+            OpModeHolder.opMode.telemetry.addData("center", center);
+            OpModeHolder.opMode.telemetry.addData("linear", linearTerm);
+            OpModeHolder.opMode.telemetry.addData("quadratic", quadratic);
+            OpModeHolder.opMode.telemetry.addData("total", quadratic + linearTerm);
+            OpModeHolder.opMode.telemetry.addData("offsetX", offsetX);
+            OpModeHolder.opMode.telemetry.addData("offsetY", offsetY);
+            OpModeHolder.opMode.telemetry.update();
         }
 
         Pipeline pipeline = new Pipeline.Builder(manager)
-//                .addLinearPath(new Position(target, 0, 0))
+                .addLinearPath(PrecisionMode.HIGH, new Position(offsetX, offsetY, 0))
                 .build();
 
         pipeline.execute();

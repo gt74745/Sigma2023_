@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.teleop.DriverControl;
 public class ArmPositionAction extends ContinuousAction {
 
     public static double targetArmPos;
-    private final PID controller = new PID(new PIDCoefficients(0.002, 0, 0));
+    private final PID controller = new PID(new PIDCoefficients(0.003, 0, 0));
     private double prevArmPos;
     private long prevTime;
 

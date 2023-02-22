@@ -14,10 +14,8 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
     //these are public static to be tuned in dashboard
     public static double strictLowS = 140;
     public static double strictHighS = 255;
-    public double rx;
-    public double ry;
-    public double rw;
-    public double rh;
+    private List<Rect> rects = new ArrayList<>();
+    public Rect averageRect;
 
     public Mat processFrame(Mat input) {
         Mat mat = new Mat();
@@ -103,23 +101,37 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
         }
 
         if (largestRect != null) {
-            rx = largestRect.x;
-            ry = largestRect.y;
-            rw = largestRect.width;
-            rh = largestRect.height;
-            int center = 600 - 2 * (int) rw;
-            OpModeHolder.opMode.telemetry.addData("Rx", largestRect.x);
-            OpModeHolder.opMode.telemetry.addData("Ry", largestRect.y);
-            OpModeHolder.opMode.telemetry.addData("Rw", largestRect.width);
-            OpModeHolder.opMode.telemetry.addData("Rh", largestRect.height);
-            OpModeHolder.opMode.telemetry.addData("Rmid", largestRect.x + largestRect.width/2);
-            OpModeHolder.opMode.telemetry.addData("center", center);
-            OpModeHolder.opMode.telemetry.update();
-        } else {
-            rx = 0;
-            ry = 0;
-            rw = 0;
-            rh = 0;
+            rects.add(largestRect);
+            if (rects.size() > 5) {
+                rects.remove(0);
+            }
+            findAverageRect();
+            Rect avg = averageRect;
+            if (avg != null && avg.width != 0 && avg.height > 300) {
+                int center = (int) (724 - 2.69 * avg.width);
+                double offsetX = (int) (40 * (avg.x + avg.width/2 - center) / avg.width);
+                double diff = avg.width - 160;
+                diff -= offsetX < 0 ? offsetX / 20d : offsetX / 4d;
+                double linearTerm = -diff * 2.4;
+                double quadratic = 0.001 * Math.pow(diff, 2);
+                // todo: not working when diff << 0
+                double offsetY = (int) (linearTerm + quadratic);
+                OpModeHolder.opMode.telemetry.addData("Rx", avg.x);
+                OpModeHolder.opMode.telemetry.addData("Ry", avg.y);
+                OpModeHolder.opMode.telemetry.addData("Rw", avg.width);
+                OpModeHolder.opMode.telemetry.addData("Rh", avg.height);
+                OpModeHolder.opMode.telemetry.addData("Rmid", avg.x + avg.width/2);
+                OpModeHolder.opMode.telemetry.addData("center", center);
+                OpModeHolder.opMode.telemetry.addData("linear", linearTerm);
+                OpModeHolder.opMode.telemetry.addData("quadratic", quadratic);
+                OpModeHolder.opMode.telemetry.addData("total", quadratic + linearTerm);
+                OpModeHolder.opMode.telemetry.addData("offsetX", offsetX);
+                OpModeHolder.opMode.telemetry.addData("offsetY", offsetY);
+                OpModeHolder.opMode.telemetry.addData("diff", diff);
+                OpModeHolder.opMode.telemetry.update();
+            }
+        } else if (!rects.isEmpty()) {
+            rects.remove(0);
         }
 
         rectComponents.release();
@@ -135,6 +147,26 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
         // you also need to release the input if you return thresh(release as much as possible)
 //        return contours.size() != 0 ? contours.get(0) : finalMask;
         return input;
+    }
+
+    public void findAverageRect() {
+        double x = 0;
+        double y = 0;
+        double w = 0;
+        double h = 0;
+        for (Rect r : rects) {
+            x += r.x;
+            y += r.y;
+            w += r.width;
+            h += r.height;
+        }
+        if (!rects.isEmpty()) {
+            x /= rects.size();
+            y /= rects.size();
+            w /= rects.size();
+            h /= rects.size();
+        }
+        averageRect = new Rect((int) x, (int) y, (int) w, (int) h);
     }
 
 }
