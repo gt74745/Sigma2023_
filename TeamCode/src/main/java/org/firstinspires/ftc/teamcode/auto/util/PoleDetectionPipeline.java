@@ -107,28 +107,39 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
             }
             findAverageRect();
             Rect avg = averageRect;
-            if (avg != null && avg.width != 0 && avg.height > 300) {
-                int center = (int) (724 - 2.69 * avg.width);
-                double offsetX = (int) (40 * (avg.x + avg.width/2 - center) / avg.width);
-                double diff = avg.width - 160;
-                diff -= offsetX < 0 ? offsetX / 20d : offsetX / 4d;
-                double linearTerm = -diff * 2.4;
-                double quadratic = 0.001 * Math.pow(diff, 2);
-                // todo: not working when diff << 0
-                double offsetY = (int) (linearTerm + quadratic);
+            if (avg != null && avg.width != 0 && avg.height > 100) {
+                Point bottomMid = new Point(avg.x + avg.width/2d, avg.y + avg.height);
+                Point output = Homography.positionFromPoint(bottomMid);
                 OpModeHolder.opMode.telemetry.addData("Rx", avg.x);
                 OpModeHolder.opMode.telemetry.addData("Ry", avg.y);
                 OpModeHolder.opMode.telemetry.addData("Rw", avg.width);
                 OpModeHolder.opMode.telemetry.addData("Rh", avg.height);
-                OpModeHolder.opMode.telemetry.addData("Rmid", avg.x + avg.width/2);
-                OpModeHolder.opMode.telemetry.addData("center", center);
-                OpModeHolder.opMode.telemetry.addData("linear", linearTerm);
-                OpModeHolder.opMode.telemetry.addData("quadratic", quadratic);
-                OpModeHolder.opMode.telemetry.addData("total", quadratic + linearTerm);
-                OpModeHolder.opMode.telemetry.addData("offsetX", offsetX);
-                OpModeHolder.opMode.telemetry.addData("offsetY", offsetY);
-                OpModeHolder.opMode.telemetry.addData("diff", diff);
+                OpModeHolder.opMode.telemetry.addData("Mx", bottomMid.x);
+                OpModeHolder.opMode.telemetry.addData("My", bottomMid.y);
+                OpModeHolder.opMode.telemetry.addData("ox", -output.x);
+                OpModeHolder.opMode.telemetry.addData("oy", output.y);
                 OpModeHolder.opMode.telemetry.update();
+//                int center = (int) (724 - 2.69 * avg.width);
+//                double offsetX = (int) (40 * (avg.x + avg.width/2 - center) / avg.width);
+//                double diff = avg.width - 160;
+//                diff -= offsetX < 0 ? offsetX / 20d : offsetX / 4d;
+//                double linearTerm = -diff * 2.4;
+//                double quadratic = 0.001 * Math.pow(diff, 2);
+//                // todo: not working when diff << 0
+//                double offsetY = (int) (linearTerm + quadratic);
+//                OpModeHolder.opMode.telemetry.addData("Rx", avg.x);
+//                OpModeHolder.opMode.telemetry.addData("Ry", avg.y);
+//                OpModeHolder.opMode.telemetry.addData("Rw", avg.width);
+//                OpModeHolder.opMode.telemetry.addData("Rh", avg.height);
+//                OpModeHolder.opMode.telemetry.addData("Rmid", avg.x + avg.width/2);
+//                OpModeHolder.opMode.telemetry.addData("center", center);
+//                OpModeHolder.opMode.telemetry.addData("linear", linearTerm);
+//                OpModeHolder.opMode.telemetry.addData("quadratic", quadratic);
+//                OpModeHolder.opMode.telemetry.addData("total", quadratic + linearTerm);
+//                OpModeHolder.opMode.telemetry.addData("offsetX", offsetX);
+//                OpModeHolder.opMode.telemetry.addData("offsetY", offsetY);
+//                OpModeHolder.opMode.telemetry.addData("diff", diff);
+//                OpModeHolder.opMode.telemetry.update();
             }
         } else if (!rects.isEmpty()) {
             rects.remove(0);
