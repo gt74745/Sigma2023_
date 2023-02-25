@@ -77,7 +77,7 @@ public class PolePIDTest extends LinearOpMode
             @Override
             public void onOpened()
             {
-                poleWebcam.startStreaming(800,448, OpenCvCameraRotation.UPRIGHT);
+                poleWebcam.startStreaming(1280,720, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override
@@ -93,13 +93,9 @@ public class PolePIDTest extends LinearOpMode
 
         Point offset = new Point();
         Rect avg = polePipeline.averageRect;
-        if (avg != null && avg.width != 0 && avg.height > 100) {
+        if (avg != null && avg.width != 0 && avg.height > 20) {
             Point bottomMid = new Point(avg.x + avg.width/2d, avg.y + avg.height);
             offset = Homography.positionFromPoint(bottomMid);
-            double scale = 100;
-//            offset.x *= scale;
-//            offset.y *= scale;
-//            offset.x += 90;
             OpModeHolder.opMode.telemetry.addData("Rx", avg.x);
             OpModeHolder.opMode.telemetry.addData("Ry", avg.y);
             OpModeHolder.opMode.telemetry.addData("Rw", avg.width);
@@ -112,7 +108,7 @@ public class PolePIDTest extends LinearOpMode
         }
 
         Pipeline pipeline = new Pipeline.Builder(manager)
-                .addLinearPath(PrecisionMode.HIGH, new Position(-offset.x + 90, offset.y - 170, 0))
+                .addLinearPath(PrecisionMode.HIGH, new Position(offset.x, offset.y, 0))
                 .build();
 
         pipeline.execute();

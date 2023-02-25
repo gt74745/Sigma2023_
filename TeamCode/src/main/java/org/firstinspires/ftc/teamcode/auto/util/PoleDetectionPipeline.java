@@ -28,7 +28,7 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
 
         // lenient bounds will filter out near yellow, this should filter out all near yellow things(tune this if needed)
         Scalar lowHSV = new Scalar(20, 70, 80); // lenient lower bound HSV for yellow
-        Scalar highHSV = new Scalar(32, 255, 255); // lenient higher bound HSV for yellow
+        Scalar highHSV = new Scalar(50, 255, 255); // lenient higher bound HSV for yellow
 
         Mat thresh = new Mat();
 
@@ -107,18 +107,17 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
             }
             findAverageRect();
             Rect avg = averageRect;
-            if (avg != null && avg.width != 0 && avg.height > 100) {
-                Point bottomMid = new Point(avg.x + avg.width/2d, avg.y + avg.height);
-                Point output = Homography.positionFromPoint(bottomMid);
-                OpModeHolder.opMode.telemetry.addData("Rx", avg.x);
-                OpModeHolder.opMode.telemetry.addData("Ry", avg.y);
-                OpModeHolder.opMode.telemetry.addData("Rw", avg.width);
-                OpModeHolder.opMode.telemetry.addData("Rh", avg.height);
-                OpModeHolder.opMode.telemetry.addData("Mx", bottomMid.x);
-                OpModeHolder.opMode.telemetry.addData("My", bottomMid.y);
-                OpModeHolder.opMode.telemetry.addData("ox", -output.x);
-                OpModeHolder.opMode.telemetry.addData("oy", output.y);
-                OpModeHolder.opMode.telemetry.update();
+            Point bottomMid = new Point(avg.x + avg.width/2d, avg.y + avg.height);
+            Point output = Homography.positionFromPoint(bottomMid);
+            OpModeHolder.opMode.telemetry.addData("Rx", avg.x);
+            OpModeHolder.opMode.telemetry.addData("Ry", avg.y);
+            OpModeHolder.opMode.telemetry.addData("Rw", avg.width);
+            OpModeHolder.opMode.telemetry.addData("Rh", avg.height);
+            OpModeHolder.opMode.telemetry.addData("Mx", bottomMid.x);
+            OpModeHolder.opMode.telemetry.addData("My", bottomMid.y);
+            OpModeHolder.opMode.telemetry.addData("ox", output.x);
+            OpModeHolder.opMode.telemetry.addData("oy", output.y);
+            OpModeHolder.opMode.telemetry.update();
 //                int center = (int) (724 - 2.69 * avg.width);
 //                double offsetX = (int) (40 * (avg.x + avg.width/2 - center) / avg.width);
 //                double diff = avg.width - 160;
@@ -140,7 +139,6 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
 //                OpModeHolder.opMode.telemetry.addData("offsetY", offsetY);
 //                OpModeHolder.opMode.telemetry.addData("diff", diff);
 //                OpModeHolder.opMode.telemetry.update();
-            }
         } else if (!rects.isEmpty()) {
             rects.remove(0);
         }

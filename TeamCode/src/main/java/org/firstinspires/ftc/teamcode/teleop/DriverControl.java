@@ -96,6 +96,7 @@ public class DriverControl extends LinearOpMode {
                 telemetry.addData("l0", manager.accessoryMotors[0].getCurrentPosition());
                 telemetry.addData("c0", clawClosed);
                 telemetry.addData("bDiff", System.currentTimeMillis() - bLastPressed);
+                telemetry.update();
 
                 ArmPositionAction.targetArmPos = armPos;
 
