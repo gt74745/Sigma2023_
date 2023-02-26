@@ -48,7 +48,7 @@ public class DriverControl extends LinearOpMode {
             long bLastPressed = 0;
             boolean clawClosed;
 
-            long bumperLastPressed = 0;
+            long precisionLastPressed = 0;
             boolean isPrecision;
             boolean isArmOverrideActive;
             double armOverrideOffset = 0;
@@ -65,16 +65,26 @@ public class DriverControl extends LinearOpMode {
                 manager.accessoryServos[1].setPosition(0.92-val);
             }
 
+            private void closeClaw() {
+                manager.accessoryServos[0].setPosition(0.58);
+                manager.accessoryServos[1].setPosition(0.45);
+            }
+
+            private void openClaw() {
+                manager.accessoryServos[0].setPosition(0.85);
+                manager.accessoryServos[1].setPosition(0.18);
+            }
+
             @Override
             public void loop() {
                 ArmPositionAction armPositionAction = new ArmPositionAction(manager);
                 double armPos = manager.accessoryMotors[0].getCurrentPosition();
 
-                if (gamepad1.left_bumper) {
+                if (gamepad1.b) {
                     isArmOverrideActive = true;
-                } else if (isArmOverrideActive) {
-                    isArmOverrideActive = false;
                     armOverrideOffset = armPos;
+                } else {
+                    isArmOverrideActive = false;
                 }
 
                 if (gamepad1.right_trigger > 0.1)
@@ -98,32 +108,34 @@ public class DriverControl extends LinearOpMode {
                 telemetry.addData("bDiff", System.currentTimeMillis() - bLastPressed);
                 telemetry.update();
 
+                if ()
+
                 ArmPositionAction.targetArmPos = armPos;
 
-                if (gamepad1.b && System.currentTimeMillis() - bLastPressed > 250) {
+                if (gamepad1.right_bumper && System.currentTimeMillis() - bLastPressed > 250) {
                     clawClosed = !clawClosed;
                     bLastPressed = System.currentTimeMillis();
                 }
 
                 if (clawClosed) {
-                    setClawPower(0.85);
+                    closeClaw();
                 } else
                 {
-                    setClawPower(0.58);
+                    openClaw();
                 }
 //                telemetry.update();
-                if (gamepad1.right_bumper && System.currentTimeMillis() - bumperLastPressed > 250) {
+                if (gamepad1.x && System.currentTimeMillis() - precisionLastPressed > 250) {
                     isPrecision = !isPrecision;
-                    bumperLastPressed = System.currentTimeMillis();
+                    precisionLastPressed = System.currentTimeMillis();
                 }
 
                 if (isPrecision) {
-                    manager.linearSpeed = 0.3;
-                    manager.rotSpeed = 0.3;
+                    manager.linearSpeed = 0.8;
+                    manager.rotSpeed = 0.55;
                 } else
                 {
-                    manager.linearSpeed = 0.8;
-                    manager.rotSpeed = 0.6;
+                    manager.linearSpeed = 1;
+                    manager.rotSpeed = 0.55;
                 }
 
                 if (gamepad1.a)
