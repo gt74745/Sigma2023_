@@ -29,11 +29,11 @@ public class ToggleClawAction extends Action {
     {
         isClosed = !isClosed;
 
-        if (isClosed) {
-            closeClaw();
-        } else
-        {
-            openClaw();
-        }
+//        if (isClosed) {
+//            closeClaw();
+//        } else
+//        {
+//            openClaw();
+//        }
     }
 }
