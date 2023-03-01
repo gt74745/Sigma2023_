@@ -90,8 +90,7 @@ public class LeftAuton extends LinearOpMode
             sleeveDetector.camera.stopStreaming();
         }
 
-        double parkingPos;
-        parkingPos = dots == 1 ? -570 :
+        double parkingPos = dots == 1 ? -570 :
                 (dots == 2 ? 0 : 600);
 
         double maxLiftHeight = 3900;
