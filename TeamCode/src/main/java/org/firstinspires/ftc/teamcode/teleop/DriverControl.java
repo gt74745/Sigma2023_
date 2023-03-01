@@ -67,12 +67,12 @@ public class DriverControl extends LinearOpMode {
 
             private void closeClaw() {
                 manager.accessoryServos[0].setPosition(0.58);
-                manager.accessoryServos[1].setPosition(0.45);
+                manager.accessoryServos[1].setPosition(0.55);
             }
 
             private void openClaw() {
                 manager.accessoryServos[0].setPosition(0.85);
-                manager.accessoryServos[1].setPosition(0.18);
+                manager.accessoryServos[1].setPosition(0.28);
             }
 
             @Override
@@ -89,7 +89,7 @@ public class DriverControl extends LinearOpMode {
 
                 if (gamepad1.right_trigger > 0.1)
                 {
-                    if (armPos - armOverrideOffset < 4000 || isArmOverrideActive)
+                    if (armPos - armOverrideOffset < 2900 || isArmOverrideActive)
                         setLiftPower(gamepad1.right_trigger);
                     else
                         armPositionAction.execute();
@@ -108,7 +108,6 @@ public class DriverControl extends LinearOpMode {
                 telemetry.addData("bDiff", System.currentTimeMillis() - bLastPressed);
                 telemetry.update();
 
-                if ()
 
                 ArmPositionAction.targetArmPos = armPos;
 

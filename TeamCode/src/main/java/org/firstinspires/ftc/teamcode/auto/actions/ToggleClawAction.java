@@ -14,20 +14,26 @@ public class ToggleClawAction extends Action {
         this.manager = manager;
     }
 
-    private void setClawPosition(double val) {
-        manager.accessoryServos[0].setPosition(val);
-        manager.accessoryServos[1].setPosition(0.91-val);
+    private void closeClaw() {
+        manager.accessoryServos[0].setPosition(0.58);
+        manager.accessoryServos[1].setPosition(0.55);
     }
+
+    private void openClaw() {
+        manager.accessoryServos[0].setPosition(0.84);
+        manager.accessoryServos[1].setPosition(0.25);
+    }
+
 
     public void execute()
     {
         isClosed = !isClosed;
 
         if (isClosed) {
-            setClawPosition(0.82);
+            closeClaw();
         } else
         {
-            setClawPosition(0.63);
+            openClaw();
         }
     }
 }
