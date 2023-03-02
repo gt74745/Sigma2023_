@@ -71,7 +71,7 @@ public class DriverControl extends LinearOpMode {
             }
 
             private void openClaw() {
-                manager.accessoryServos[0].setPosition(0.85);
+                manager.accessoryServos[0].setPosition(0.78);
                 manager.accessoryServos[1].setPosition(0.28);
             }
 
