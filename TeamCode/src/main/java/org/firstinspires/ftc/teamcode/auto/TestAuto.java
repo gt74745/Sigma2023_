@@ -10,10 +10,12 @@ import com.chsrobotics.ftccore.hardware.config.accessory.Accessory;
 import com.chsrobotics.ftccore.hardware.config.accessory.AccessoryType;
 import com.chsrobotics.ftccore.pipeline.Pipeline;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 
+@Disabled
 @Autonomous(name="Test")
 public class TestAuto extends LinearOpMode {
     @Override

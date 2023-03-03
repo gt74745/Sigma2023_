@@ -11,6 +11,7 @@ import com.chsrobotics.ftccore.hardware.config.accessory.AccessoryType;
 import com.chsrobotics.ftccore.pipeline.Pipeline;
 import com.chsrobotics.ftccore.vision.CVUtility;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -25,6 +26,7 @@ import org.firstinspires.ftc.teamcode.auto.actions.SetArmAction;
 import org.firstinspires.ftc.teamcode.auto.actions.ToggleClawAction;
 import org.firstinspires.ftc.teamcode.auto.actions.WaitAction;
 
+@Disabled
 @Autonomous(name = "Right Side")
 public class RightAuton extends LinearOpMode
 {
