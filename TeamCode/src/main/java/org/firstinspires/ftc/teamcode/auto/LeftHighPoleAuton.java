@@ -130,7 +130,7 @@ public class LeftHighPoleAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         profile,
-                        new Position(-720, 1340, Math.PI / 2, 0.8, 3.5)
+                        new Position(-710, 1340, Math.PI / 2, 0.8, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 2
@@ -147,7 +147,7 @@ public class LeftHighPoleAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         profile,
-                        new Position(-720, 1340, Math.PI / 2, 0.8, 3.5)
+                        new Position(-710, 1340, Math.PI / 2, 0.8, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 3
@@ -164,7 +164,7 @@ public class LeftHighPoleAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         profile,
-                        new Position(-720, 1340, Math.PI / 2, 0.8, 3.5)
+                        new Position(-710, 1340, Math.PI / 2, 0.8, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 4
@@ -181,7 +181,7 @@ public class LeftHighPoleAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         profile,
-                        new Position(-720, 1340, Math.PI / 2, 0.8, 3.5)
+                        new Position(-710, 1340, Math.PI / 2, 0.8, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 5
