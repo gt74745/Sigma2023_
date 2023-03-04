@@ -94,9 +94,8 @@ public class LeftHighPoleAuton extends LinearOpMode
             sleeveDetector.camera.stopStreaming();
         }
 
-        double parkingPos = dots == 1 ? -675 :
-                (dots == 2 ? 0 : 520);
-
+        double parkingPos = dots == 1 ? -700 :
+                (dots == 2 ? -200 : 500);
         double maxLiftHeight = 2600;
 
         double poleLiftHeight = 2700;

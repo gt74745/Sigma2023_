@@ -46,11 +46,11 @@ public class RightAllMediumPoleAuton extends LinearOpMode
                 .setOdometryWheelProperties(8192, 35, -233.2037353515/2, -186.0614013671/2)
                 .setOpMode(this)
                 .setIMU("imu")
-                .setPIDCoefficients(new PIDCoefficients(3.5, 0.008, 20.0), new PIDCoefficients(700, 0.003, 0))
+                .setPIDCoefficients(new PIDCoefficients(3.5, 0.008, 4.0), new PIDCoefficients(700, 0.003, 0))
                 .setNavigationTolerances(new Tolerances(45, 0.1))
                 .setHighPrecisionTolerances(new Tolerances(17, 0.04))
                 .setLowPrecisionTolerances(new Tolerances(45, 0.1))
-                .setRotationMovementCoefficient(1/2400d)
+                .setRotationMovementCoefficient(1/4000d)
                 .build();
 
         HardwareManager manager = new HardwareManager(config, hardwareMap);
@@ -93,8 +93,8 @@ public class RightAllMediumPoleAuton extends LinearOpMode
             sleeveDetector.camera.stopStreaming();
         }
 
-        double parkingPos = dots == 1 ? -570 :
-                (dots == 2 ? 0 : 600);
+        double parkingPos = dots == 1 ? -500 :
+                (dots == 2 ? 200 : 700);
 
         double maxLiftHeight = 2600;
 
@@ -122,17 +122,11 @@ public class RightAllMediumPoleAuton extends LinearOpMode
                 .addAction(toggleClawAction)
                 .addAction(new DelayAction(manager, 200))
                 .addAction(new SetArmAction(manager, 350))
-                // todo: make these two moves a single spline
-                .addCurvedPath(
-                    new TrapezoidalMotionProfile(900, 1700),
-                    new Position(-430, 1000,3 * Math.PI/2),
-                    new Position(-460, 1395, 3 * Math.PI/2),
-                    new Position(695, 1395, 3 * Math.PI / 2)
-                )
+                .addLinearPath(profile, new Position(-460, 1340, 3 * Math.PI/2))
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         profile,
-                        new Position(695, 1395, 3 * Math.PI / 2, 0, 1)
+                        new Position(675, 1275, 3 * Math.PI / 2, 0, 4)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 2
@@ -149,7 +143,7 @@ public class RightAllMediumPoleAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         profile,
-                        new Position(685, 1275, 3 * Math.PI / 2, 0.8, 3.5)
+                        new Position(675, 1275, 3 * Math.PI / 2, 0.8, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 3

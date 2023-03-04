@@ -93,8 +93,8 @@ public class RightHighMediumPoleAuton extends LinearOpMode
             sleeveDetector.camera.stopStreaming();
         }
 
-        double parkingPos = dots == 1 ? -555 :
-                (dots == 2 ? 0 : 615);
+        double parkingPos = dots == 1 ? -500 :
+                (dots == 2 ? 200 : 700);
 
         double maxLiftHeight = 2600;
 

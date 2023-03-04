@@ -46,7 +46,7 @@ public class RightHighPoleAuton extends LinearOpMode
                 .setOdometryWheelProperties(8192, 35, -233.2037353515/2, -186.0614013671/2)
                 .setOpMode(this)
                 .setIMU("imu")
-                .setPIDCoefficients(new PIDCoefficients(3.5, 0.008, 20.0), new PIDCoefficients(700, 0.003, 0))
+                .setPIDCoefficients(new PIDCoefficients(3.5, 0.008, 4.0), new PIDCoefficients(700, 0.003, 0))
                 .setNavigationTolerances(new Tolerances(45, 0.1))
                 .setHighPrecisionTolerances(new Tolerances(17, 0.04))
                 .setLowPrecisionTolerances(new Tolerances(45, 0.1))
@@ -114,12 +114,12 @@ public class RightHighPoleAuton extends LinearOpMode
                             add(0.7);
                         }},
                         new Position(0, 0, 0),
-                        new Position(-250, 150, 0),
-                        new Position(-270, 700, 0),
-                        new Position(-245, 1200, 0),
-                        new Position(-50, 1335, 0)
+                        new Position(-270, 150, 0),
+                        new Position(-290, 700, 0),
+                        new Position(-255, 1200, 0),
+                        new Position(-5, 1300, 0)
                 )
-                .addLinearPath(PrecisionMode.HIGH, new Position(-150, 1345, 0, 0, 1))
+                .addLinearPath(PrecisionMode.HIGH, new Position(-160, 1355, 0, 0, 1))
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, poleLiftHeight - 400))
                 .addAction(new DelayAction(manager, 200))
@@ -129,14 +129,14 @@ public class RightHighPoleAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         profile,
-                        new Position(695, 1295, 3 * Math.PI / 2, 0.8, 3.5)
+                        new Position(685, 1285, 3 * Math.PI / 2, 0.8, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 2
                 .addAction(new DelayAction(manager, 400))
                 .addAction(new SetArmAction(manager,poleLiftHeight))
                 .addAction(new DelayAction(manager, 200))
-                .addLinearPath(PrecisionMode.HIGH, new Position(-160, 1365, 0, 1.4, 3.5))
+                .addLinearPath(PrecisionMode.HIGH, new Position(-180, 1355, 0, 1.4, 3.5))
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, poleLiftHeight - 400))
                 .addAction(new DelayAction(manager, 200))
@@ -146,14 +146,14 @@ public class RightHighPoleAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         profile,
-                        new Position(685, 1320, 3 * Math.PI / 2, 0.8, 3.5)
+                        new Position(675, 1315, 3 * Math.PI / 2, 0.8, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 3
                 .addAction(new DelayAction(manager, 400))
                 .addAction(new SetArmAction(manager,poleLiftHeight))
                 .addAction(new DelayAction(manager, 200))
-                .addLinearPath(PrecisionMode.HIGH, new Position(-190, 1395, 0, 1.4, 3.5))
+                .addLinearPath(PrecisionMode.HIGH, new Position(-190, 1375, 0, 1.4, 3.5))
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, poleLiftHeight - 400))
                 .addAction(new DelayAction(manager, 200))
@@ -163,14 +163,14 @@ public class RightHighPoleAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         profile,
-                        new Position(665, 1355, 3 * Math.PI / 2, 0.8, 3.5)
+                        new Position(665, 1325, 3 * Math.PI / 2, 0.8, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 4
                 .addAction(new DelayAction(manager, 400))
                 .addAction(new SetArmAction(manager,poleLiftHeight))
                 .addAction(new DelayAction(manager, 200))
-                .addLinearPath(PrecisionMode.HIGH, new Position(-190, 1425, 0, 1.4, 3.5))
+                .addLinearPath(PrecisionMode.HIGH, new Position(-210, 1405, 0, 1.4, 3.5))
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, poleLiftHeight - 400))
                 .addAction(new DelayAction(manager, 200))
@@ -180,14 +180,14 @@ public class RightHighPoleAuton extends LinearOpMode
                 .addLinearPath(                                                 // Align with cone stack
                         PrecisionMode.HIGH,
                         profile,
-                        new Position(645, 1390, 3 * Math.PI / 2, 0.8, 3.5)
+                        new Position(665, 1345, 3 * Math.PI / 2, 0.8, 3.5)
                 )
                 .addAction(new FullStopAction(manager))
                 .addAction(toggleClawAction)                                    // Pickup cone 5
                 .addAction(new DelayAction(manager, 400))
                 .addAction(new SetArmAction(manager,poleLiftHeight))
                 .addAction(new DelayAction(manager, 200))
-                .addLinearPath(PrecisionMode.HIGH, new Position(-210, 1440, 0, 1.4, 3.5))
+                .addLinearPath(PrecisionMode.HIGH, new Position(-225, 1425, 0, 1.4, 3.5))
                 .addAction(new FullStopAction(manager))
                 .addAction(new SetArmAction(manager, poleLiftHeight - 400))
                 .addAction(new DelayAction(manager, 200))
